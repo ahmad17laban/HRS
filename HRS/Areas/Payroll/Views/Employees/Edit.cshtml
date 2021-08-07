@@ -1,0 +1,85 @@
+﻿<form id="frmEdit">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="clearfix m-2"></div>
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title pt-2"></h3>
+                    <div class="card-tools">
+                        <button type="submit" class="btn btn-primary "><i class="fa fa-save fa-fw"></i> Save</button>
+                        <a href="/Payroll/employees/Index" class="btn btn-default "><i class="fa fa-arrow-left fa-fw"></i> return</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="EmpId">EmpId</label>
+                                <input type="text" class="form-control" id="EmpId" name="EmpId" placeholder="Auto Generate" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="EmpName">Name</label>
+                                <input type="text" class="form-control" id="EmpName" name="EmpName" placeholder="Enter Name" required>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="EmpEmail">Email </label>
+                                <input type="email" class="form-control" id="EmpEmail" name="EmpEmail" placeholder="Enter email">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="EmpNo"> Mobile.No</label>
+                                <input type="number" class="form-control" id="EmpNo" name="EmpNo" placeholder="Enter number">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+@section scripts{
+    <script>
+        $('#frmEdit').submit(function (e) {
+            e.preventDefault();
+
+            if (confirm('are U sure U want to save ?')) {
+
+                var prams = $('#frmEdit').serialize();
+                //alert(prams);
+                $.ajax({
+                    url: '/Payroll/employees/Save',
+                    type: 'POST',
+                    data: prams,
+                    success: function (response) {
+                        //console.log(response)
+                        if (response.err == '') {
+                            alert('record is saves')
+                            setTimeout(function () {
+                                window.location = '/Payroll/employees/Index';
+                            }, 500);
+                        }
+                        else {
+                            alert(response.err);
+                        }
+
+                    }
+
+
+                });
+
+            }
+
+            //alert('submit');
+
+        });
+
+    </script>
+}
